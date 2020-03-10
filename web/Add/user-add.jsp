@@ -26,7 +26,7 @@
 <body>
 <div class="container">
     <h3>添加用户</h3>
-    <form action="" method="post">
+    <form action="${pageContext.request.contextPath}/UserAddServlet" method="post">
         <div class="form-group">
             <label for="name">姓名：</label>
             <input type="text" class="form-control" id="name" name="name" placeholder="请输入姓名">

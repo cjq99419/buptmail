@@ -12,4 +12,8 @@ import java.util.List;
  */
 public interface OrdersService {
     public List<Orders> findAll();
+
+    void addOrder(Orders orders);
+
+    void deleteOrder(String id);
 }

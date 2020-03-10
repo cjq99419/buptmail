@@ -28,6 +28,14 @@
             text-align: center;
         }
     </style>
+
+    <script type="text/javascript">
+        function deleteStaff(id) {
+            if(confirm("是否确定删除?")){
+                window.location.href = "${pageContext.request.contextPath}/StaffDeleteServlet?id="+id;
+            }
+        }
+    </script>
 </head>
 <body>
 <div class="container">
@@ -74,13 +82,14 @@
                 <td>${staff.address_region}</td>
                 <td>${staff.salary}</td>
                 <td>${staff.position}</td>
-                <td><a class="btn btn-default btn-sm" href="../update.html">修改</a>&nbsp;<a class="btn btn-default btn-sm" href="">删除</a></td>
+                <td><a class="btn btn-default btn-sm" href="../update.html">修改</a>&nbsp;
+                    <a class="btn btn-default btn-sm" href="javascript:deleteStaff(${staff.id})">删除</a></td>
             </tr>
         </c:forEach>
     </table>
 
     <div>
-        <nav aria-label="Page navigation">
+        <nav aria-label="Page navigation" style="float: left">
             <ul class="pagination">
                 <li>
                     <a href="#" aria-label="Previous">
@@ -111,6 +120,7 @@
                 </span>
             </ul>
         </nav>
+        <a class="btn btn-primary" href="${pageContext.request.contextPath}/index.jsp" style="float: right">返回</a>
     </div>
 
 </div>

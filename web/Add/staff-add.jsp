@@ -26,10 +26,10 @@
 <body>
 <div class="container">
     <h3>添加职员</h3>
-    <form action="" method="post">
+    <form action="${pageContext.request.contextPath}/StaffAddServlet" method="post">
         <div class="form-group">
-            <label for="name">姓名：</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="请输入姓名">
+            <label for="staff_name">姓名：</label>
+            <input type="text" class="form-control" id="staff_name" name="staff_name" placeholder="请输入姓名">
         </div>
 
         <div class="form-group">
@@ -54,7 +54,7 @@
 
         <div class="form-group">
             <label for="position">职位：</label>
-            <select name="mode_payment" class="position" id="position">
+            <select name="position" class="position" id="position">
                 <option value="staff">职员</option>
                 <option value="manager">经理</option>
             </select>

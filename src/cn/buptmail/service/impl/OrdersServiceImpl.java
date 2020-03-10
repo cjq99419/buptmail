@@ -5,6 +5,7 @@ import cn.buptmail.dao.impl.OrdersDAOImpl;
 import cn.buptmail.domain.Orders;
 import cn.buptmail.service.OrdersService;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -19,5 +20,19 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public List<Orders> findAll() {
         return dao.findAll();
+    }
+
+    @Override
+    public void addOrder(Orders orders) {
+        orders.setDate(new Date());
+        orders.setPrice(orders.getWeight() * 3);
+        orders.setStatus("0");
+        orders.setLocation(orders.getSender_address());
+        dao.add(orders);
+    }
+
+    @Override
+    public void deleteOrder(String id) {
+        dao.delete(Integer.parseInt(id));
     }
 }

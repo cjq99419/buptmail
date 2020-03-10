@@ -28,6 +28,14 @@
             text-align: center;
         }
     </style>
+
+    <script type="text/javascript">
+        function deleteUser(id) {
+            if(confirm("是否确定删除?")){
+                window.location.href = "${pageContext.request.contextPath}/UserDeleteServlet?id="+id;
+            }
+        }
+    </script>
 </head>
 <body>
 <div class="container">
@@ -69,13 +77,14 @@
                 <td>${user.name}</td>
                 <td>${user.tel}</td>
                 <td>${user.email}</td>
-                <td><a class="btn btn-default btn-sm" href="../update.html">修改</a>&nbsp;<a class="btn btn-default btn-sm" href="">删除</a></td>
+                <td><a class="btn btn-default btn-sm" href="../update.html">修改</a>&nbsp;
+                    <a class="btn btn-default btn-sm" href="javascript:deleteUser(${user.id})">删除</a></td>
             </tr>
         </c:forEach>
     </table>
 
     <div>
-        <nav aria-label="Page navigation">
+        <nav aria-label="Page navigation" style="float: left">
             <ul class="pagination">
                 <li>
                     <a href="#" aria-label="Previous">
@@ -101,11 +110,12 @@
                         ${users.size()}
                     </c:if>
                     条记录,共
-                    <f:formatNumber value="${users.size()/4+1}" pattern="0"></f:formatNumber>
+                    <f:formatNumber value="${users.size()/4+1}" pattern="0"/>
                     页
                 </span>
             </ul>
         </nav>
+        <a class="btn btn-primary" href="${pageContext.request.contextPath}/index.jsp" style="float: right">返回</a>
     </div>
 
 </div>

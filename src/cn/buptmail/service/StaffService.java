@@ -12,4 +12,8 @@ import java.util.List;
  */
 public interface StaffService {
     public List<Staff> findAll();
+
+    void addStaff(Staff staff);
+
+    void deleteStaff(String id);
 }

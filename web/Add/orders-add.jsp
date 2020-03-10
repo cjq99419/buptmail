@@ -28,7 +28,7 @@
 <body>
 <div class="container">
     <h3>添加订单</h3>
-    <form action="" method="post">
+    <form action="${pageContext.request.contextPath}/OrdersAddServlet" method="post">
         <div class="form-group">
             <label for="sender_name">寄件人姓名：</label>
             <input type="text" class="form-control" id="sender_name" name="sender_name" placeholder="请输入寄件人姓名">

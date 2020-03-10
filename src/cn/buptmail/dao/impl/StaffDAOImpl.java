@@ -26,5 +26,18 @@ public class StaffDAOImpl implements StaffDAO {
         return staffs;
     }
 
+    @Override
+    public void add(Staff staff) {
+        String sql = "insert into staff values(null, ?, ?, ?, ?, ?, ?, ?)";
+        template.update(sql, staff.getStaff_name(), staff.getPassword(), staff.getTel(), staff.getEmail(),
+                staff.getAddress_region(), staff.getSalary(), staff.getPosition());
+    }
+
+    @Override
+    public void delete(int id) {
+        String sql = "delete from staff where id=?";
+        template.update(sql, id);
+    }
+
 }
 

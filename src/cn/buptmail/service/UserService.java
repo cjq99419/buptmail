@@ -13,4 +13,8 @@ import java.util.List;
 public interface UserService {
     List<User> findAll();
     User login(User user);
+
+    void addUser(User user);
+
+    void deleteUser(String id);
 }

@@ -20,4 +20,16 @@ public class StaffServiceImpl implements StaffService {
     public List<Staff> findAll() {
         return dao.findAll();
     }
+
+    @Override
+    public void addStaff(Staff staff) {
+        if("manager".equals(staff.getPosition())) staff.setSalary(15000);
+        else staff.setSalary(10000);
+        dao.add(staff);
+    }
+
+    @Override
+    public void deleteStaff(String id) {
+        dao.delete(Integer.parseInt(id));
+    }
 }

@@ -2,11 +2,11 @@ package cn.buptmail.dao.impl;
 
 import cn.buptmail.dao.OrdersDAO;
 import cn.buptmail.domain.Orders;
-import cn.buptmail.domain.User;
 import cn.buptmail.util.JDBCUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,5 +25,21 @@ public class OrdersDAOImpl implements OrdersDAO {
         String sql = "select * from orders";
         List<Orders> orders = template.query(sql, new BeanPropertyRowMapper<Orders>(Orders.class));
         return orders;
+    }
+
+    @Override
+    public void add(Orders orders) {
+        Date date = new Date();
+        String sql = "insert into orders values(null, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        template.update(sql, orders.getSender_name(), orders.getSender_tel(), orders.getSender_address(),
+                orders.getRecipient_name(), orders.getRecipient_tel(), orders.getRecipient_address(),
+                orders.getType(), orders.getPrice(), orders.getMode_payment(), orders.getWeight(),
+                orders.getStatus(), orders.getDate(), orders.getLocation());
+    }
+
+    @Override
+    public void delete(int id) {
+        String sql = "delete from orders where id=?";
+        template.update(sql, id);
     }
 }

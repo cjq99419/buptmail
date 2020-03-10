@@ -11,5 +11,9 @@ import java.util.List;
  * @Notes NULL
  */
 public interface StaffDAO {
-    public List<Staff> findAll();
+    List<Staff> findAll();
+
+    void add(Staff staff);
+
+    void delete(int id);
 }

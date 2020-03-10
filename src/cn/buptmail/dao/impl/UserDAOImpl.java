@@ -37,4 +37,16 @@ public class UserDAOImpl implements UserDAO {
             return null;
         }
     }
+
+    @Override
+    public void add(User user) {
+        String sql = "insert into user values(null, ?, ?, ?, ?)";
+        template.update(sql, user.getName(), user.getPassword(), user.getTel(), user.getEmail());
+    }
+
+    @Override
+    public void delete(int id) {
+        String sql = "delete from user where id=?";
+        template.update(sql, id);
+    }
 }

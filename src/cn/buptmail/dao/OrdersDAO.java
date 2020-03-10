@@ -13,5 +13,9 @@ import java.util.List;
  */
 
 public interface OrdersDAO {
-    public List<Orders> findAll();
+    List<Orders> findAll();
+
+    void add(Orders orders);
+
+    void delete(int id);
 }
