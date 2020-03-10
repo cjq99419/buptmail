@@ -16,4 +16,8 @@ public interface StaffService {
     void addStaff(Staff staff);
 
     void deleteStaff(String id);
+
+    Staff findStaffById(String id);
+
+    void updateStaff(Staff staff);
 }

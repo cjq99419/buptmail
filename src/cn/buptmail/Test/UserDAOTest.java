@@ -1,7 +1,11 @@
 package cn.buptmail.Test;
 
+import cn.buptmail.dao.UserDAO;
 import cn.buptmail.dao.impl.UserDAOImpl;
+import cn.buptmail.domain.Orders;
 import cn.buptmail.domain.User;
+import cn.buptmail.service.UserService;
+import cn.buptmail.service.impl.UserServiceImpl;
 import org.junit.Test;
 
 import java.util.List;
@@ -18,5 +22,17 @@ public class UserDAOTest {
     public void findAllTest(){
         List<User> users = new UserDAOImpl().findAll();
         System.out.println(users.get(1).getName());
+    }
+
+    @Test
+    public void updateTest(){
+        User user = new User();
+        user.setId(12);
+        user.setPassword("041916");
+        user.setEmail("111");
+        user.setTel("6816");
+        user.setName("cjq6asfadsf66");
+        UserService service = new UserServiceImpl();
+        service.updateUser(user);
     }
 }

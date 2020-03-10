@@ -17,6 +17,17 @@ public class User {
 
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", password='" + password + '\'' +
+                ", tel='" + tel + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
+
     public User(String name, String password) {
         this.name = name;
         this.password = password;

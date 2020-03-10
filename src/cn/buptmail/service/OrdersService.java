@@ -16,4 +16,8 @@ public interface OrdersService {
     void addOrder(Orders orders);
 
     void deleteOrder(String id);
+
+    void updateOrder(Orders orders);
+
+    Orders findOrdersById(String id);
 }

@@ -18,4 +18,8 @@ public interface OrdersDAO {
     void add(Orders orders);
 
     void delete(int id);
+
+    void update(Orders order);
+
+    Orders findOrdersById(int id);
 }

@@ -32,4 +32,16 @@ public class StaffServiceImpl implements StaffService {
     public void deleteStaff(String id) {
         dao.delete(Integer.parseInt(id));
     }
+
+    @Override
+    public Staff findStaffById(String id) {
+        return dao.findStaffById(Integer.parseInt(id));
+    }
+
+    @Override
+    public void updateStaff(Staff staff) {
+        if("manager".equals(staff.getPosition())) staff.setSalary(15000);
+        else staff.setSalary(10000);
+        dao.update(staff);
+    }
 }

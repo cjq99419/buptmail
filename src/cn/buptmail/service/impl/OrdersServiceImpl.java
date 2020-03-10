@@ -35,4 +35,21 @@ public class OrdersServiceImpl implements OrdersService {
     public void deleteOrder(String id) {
         dao.delete(Integer.parseInt(id));
     }
+
+    @Override
+    public void updateOrder(Orders orders) {
+        if(orders.getDate() == null)
+            orders.setDate(new Date());
+        orders.setPrice(orders.getWeight() * 3);
+        if(orders.getStatus() == null)
+        orders.setStatus("0");
+        if(orders.getLocation() == null)
+        orders.setLocation(orders.getSender_address());
+        dao.update(orders);
+    }
+
+    @Override
+    public Orders findOrdersById(String id) {
+        return dao.findOrdersById(Integer.parseInt(id));
+    }
 }

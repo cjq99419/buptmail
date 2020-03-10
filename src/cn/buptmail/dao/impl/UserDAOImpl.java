@@ -1,6 +1,7 @@
 package cn.buptmail.dao.impl;
 
 import cn.buptmail.dao.UserDAO;
+import cn.buptmail.domain.Staff;
 import cn.buptmail.domain.User;
 import cn.buptmail.util.JDBCUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -49,4 +50,16 @@ public class UserDAOImpl implements UserDAO {
         String sql = "delete from user where id=?";
         template.update(sql, id);
     }
+
+    @Override
+    public void update(User user) {
+        String sql = "update user set name=?, password=?, tel=?, email=? where id=?";
+        template.update(sql, user.getName(), user.getPassword(), user.getTel(), user.getEmail(), user.getId());
+    }
+
+    @Override
+    public User findUserById(int id) {
+        String sql = "select * from user where id=?";
+        return template.queryForObject(sql, new BeanPropertyRowMapper<User>(User.class), id);
+}
 }

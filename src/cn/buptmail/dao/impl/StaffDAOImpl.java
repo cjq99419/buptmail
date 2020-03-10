@@ -39,5 +39,18 @@ public class StaffDAOImpl implements StaffDAO {
         template.update(sql, id);
     }
 
+    @Override
+    public Staff findStaffById(int id) {
+        String sql = "select * from staff where id=?";
+        return template.queryForObject(sql, new BeanPropertyRowMapper<Staff>(Staff.class), id);
+    }
+
+    @Override
+    public void update(Staff staff) {
+        String sql = "update staff set staff_name=?, password=?, tel=?, email=?, address_region= ?, salary=?, position=? where id=?";
+        template.update(sql, staff.getStaff_name(), staff.getPassword(), staff.getTel(), staff.getEmail(),
+                staff.getAddress_region(), staff.getSalary(), staff.getPosition(), staff.getId());
+    }
+
 }
 

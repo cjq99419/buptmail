@@ -3,6 +3,7 @@ package cn.buptmail.Test;
 import cn.buptmail.dao.OrdersDAO;
 import cn.buptmail.dao.impl.OrdersDAOImpl;
 import cn.buptmail.domain.Orders;
+import com.sun.org.apache.xpath.internal.operations.Or;
 import org.junit.Test;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public class OrdersDAOTest {
         List<Orders> orders = ordersDAO.findAll();
         System.out.println(orders.get(0).getRecipient_name());
     }
+
+
 }
