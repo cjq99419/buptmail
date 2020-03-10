@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <!-- 网页使用的语言 -->
 <html lang="zh-CN">
@@ -30,7 +31,7 @@
 </head>
 <body>
 <div class="container">
-    <h3 style="text-align: center">订单信息列表</h3>
+    <h3 style="text-align: center">用户信息列表</h3>
 
     <div style="float: left;margin: 5px">
         <form class="form-inline">
@@ -39,7 +40,7 @@
                 <input type="text" class="form-control" id="exampleInputName2">
             </div>
             <div class="form-group">
-                <label for="exampleInputEmail2">寄件人</label>
+                <label for="exampleInputEmail2">姓名</label>
                 <input type="email" class="form-control" id="exampleInputEmail2">
             </div>
             <button type="submit" class="btn btn-default">查询</button>
@@ -47,40 +48,30 @@
     </div>
 
     <div style="float: right;margin: 5px">
-        <a class="btn btn-primary" href="../add.html">添加订单</a>
+        <a class="btn btn-primary" href="${pageContext.request.contextPath}/Add/user-add.jsp">添加用户</a>
         <a class="btn btn-primary" href="../add.html">删除选中</a>
     </div>
+
 
     <table border="1" class="table table-bordered table-hover">
         <tr class="success">
             <th> </th>
             <th>编号</th>
-            <th>寄件人</th>
-            <th>收件人</th>
-            <th>类型</th>
-            <th>运费</th>
-            <th>重量</th>
-            <th>状态</th>
-            <th>日期</th>
+            <th>姓名</th>
+            <th>手机号</th>
+            <th>邮箱</th>
             <th>操作</th>
         </tr>
-        <c:forEach items="${orders}" var="order" varStatus="s">
+        <c:forEach items="${users}" var="user" varStatus="s">
             <tr>
                 <td><input type="checkbox"></td>
                 <td>${s.count}</td>
-                <td>${order.sender_name}</td>
-                <td>${order.recipient_name}</td>
-                <td>${order.type}</td>
-                <td>${order.price}</td>
-                <td>${order.weight}</td>
-                <td>${order.status}</td>
-                <td>
-                    <f:formatDate value="${order.date}" pattern="yyyy年MM月dd日" />
-                </td>
+                <td>${user.name}</td>
+                <td>${user.tel}</td>
+                <td>${user.email}</td>
                 <td><a class="btn btn-default btn-sm" href="../update.html">修改</a>&nbsp;<a class="btn btn-default btn-sm" href="">删除</a></td>
             </tr>
         </c:forEach>
-
     </table>
 
     <div>
@@ -103,20 +94,20 @@
                 </li>
                 <span style="font-size: 20px">
                     共
-                    <c:if test="${empty orders}">
+                    <c:if test="${empty users}">
                         0
                     </c:if>
-                    <c:if test="${not empty orders}">
-                        ${orders.size()}
+                    <c:if test="${not empty users}">
+                        ${users.size()}
                     </c:if>
                     条记录,共
-                    <f:formatNumber value="${orders.size()/4+1}" pattern="0"></f:formatNumber>
+                    <f:formatNumber value="${users.size()/4+1}" pattern="0"></f:formatNumber>
                     页
                 </span>
             </ul>
         </nav>
     </div>
+
 </div>
 </body>
 </html>
-

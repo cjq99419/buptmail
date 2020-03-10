@@ -24,7 +24,7 @@ public class OrdersListServlet extends HttpServlet {
         OrdersService service = new OrdersServiceImpl();
         List<Orders> orders = service.findAll();
         request.setAttribute("orders", orders);
-        request.getRequestDispatcher("/List/orderslist.jsp").forward(request, response);
+        request.getRequestDispatcher("/List/orders-list.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
