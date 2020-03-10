@@ -35,7 +35,7 @@ public class LoginServlet extends HttpServlet {
         if(checkCodeSession != null && checkCodeSession.equalsIgnoreCase(checkCode)){
             if(login != null){
                 session.setAttribute("user", username);
-                //response.sendRedirect(request.getContextPath()+"/success.jsp");
+                response.sendRedirect(request.getContextPath()+"/index.jsp");
             }else{
                 request.setAttribute("login_error", "用户名或密码错误");
                 request.getRequestDispatcher("/userlogin.jsp").forward(request, response);

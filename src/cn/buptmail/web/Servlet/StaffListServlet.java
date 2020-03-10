@@ -24,7 +24,7 @@ public class StaffListServlet extends HttpServlet {
         StaffService service = new StaffServiceImpl();
         List<Staff> staffs = service.findAll();
         request.setAttribute("staffs", staffs);
-        request.getRequestDispatcher("/stafflist.jsp").forward(request, response);
+        request.getRequestDispatcher("/List/stafflist.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
