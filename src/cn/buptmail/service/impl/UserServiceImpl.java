@@ -23,7 +23,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User login(User user) {
-        return dao.findUserByUsernameAndPassword(user.getName(), user.getPassword());
+        //System.out.println(user.getName());
+        if(user.getName() != null){
+            return dao.findUserByUsernameAndPassword(user.getName(), user.getPassword());
+        }else{
+            return dao.findUserByTelAndPassword(user.getTel(), user.getPassword());
+        }
     }
 
     @Override

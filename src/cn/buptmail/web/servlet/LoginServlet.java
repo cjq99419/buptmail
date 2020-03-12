@@ -25,24 +25,32 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String checkCode = request.getParameter("checkCode");
-
+        System.out.println(username);
         HttpSession session = request.getSession();
         String checkCodeSession = (String) session.getAttribute("checkCodeSession");
         session.removeAttribute("checkCodeSession");
 
         UserService service = new UserServiceImpl();
-        User login = service.login(new User(username, password));
+        String telRegex = "[1][3578]\\d{9}";
+        User usr = new User();
+        if(username.matches(telRegex)){
+            usr.setTel(username);
+        }else{
+            usr.setName(username);
+        }
+        usr.setPassword(password);
+        User login = service.login(usr);
         if(checkCodeSession != null && checkCodeSession.equalsIgnoreCase(checkCode)){
             if(login != null){
-                session.setAttribute("user", username);
+                session.setAttribute("user", login.getName());
                 response.sendRedirect(request.getContextPath()+"/index.jsp");
             }else{
                 request.setAttribute("login_error", "用户名或密码错误");
-                request.getRequestDispatcher("/userlogin.jsp").forward(request, response);
+                request.getRequestDispatcher("/user-login.jsp").forward(request, response);
             }
         }else{
             request.setAttribute("cc_error", "验证码错误");
-            request.getRequestDispatcher("/userlogin.jsp").forward(request, response);
+            request.getRequestDispatcher("/user-login.jsp").forward(request, response);
         }
 
 

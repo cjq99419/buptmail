@@ -41,6 +41,18 @@ public class UserDAOImpl implements UserDAO {
     }
 
     @Override
+    public User findUserByTelAndPassword(String tel, String password) {
+        try {
+            String sql = "select * from user where tel = ? and password = ?";
+            User user = template.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), tel, password);
+            return user;
+        }catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    @Override
     public void add(User user) {
         String sql = "insert into user values(null, ?, ?, ?, ?)";
         template.update(sql, user.getName(), user.getPassword(), user.getTel(), user.getEmail());
