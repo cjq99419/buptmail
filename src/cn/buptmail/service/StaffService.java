@@ -1,5 +1,6 @@
 package cn.buptmail.service;
 
+import cn.buptmail.domain.Page;
 import cn.buptmail.domain.Staff;
 
 import java.util.List;
@@ -20,4 +21,8 @@ public interface StaffService {
     Staff findStaffById(String id);
 
     void updateStaff(Staff staff);
+
+    void deleteSelectedUser(String[] ids);
+
+    Page<Staff> findStaffByPage(String currentPage, String rows);
 }

@@ -28,8 +28,9 @@ public class RandomInsert {
 
 
     public static void main(String[] args) {
-        randomInsertOrder(20);
-        randomInsertStaff(20);
+        randomInsertOrder(50);
+        randomInsertStaff(50);
+        randomInsertUser(50);
     }
 
     public static void randomInsertUser(int num){
@@ -69,7 +70,7 @@ public class RandomInsert {
         staff.setEmail(CreateUtils.getEmail(5, 8));
         staff.setAddress_region(CreateUtils.getRoad());
         Random random = new Random();
-        if(random.nextInt(5) < 4){
+        if(random.nextInt(6) < 4){
             staff.setPosition("staff");
             staff.setSalary(10000);
         }else{

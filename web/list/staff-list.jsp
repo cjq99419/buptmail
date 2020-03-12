@@ -35,6 +35,22 @@
                 window.location.href = "${pageContext.request.contextPath}/StaffDeleteServlet?id="+id;
             }
         }
+
+        window.onload = function () {
+            document.getElementById("deleteSelected").onclick = function () {
+                if(confirm("确定删除选中数据？")){
+                    let cbs = document.getElementsByName("sid");
+                    let flag = false;
+                    for(let i = 0; i < cbs.length; i++){
+                        if(cbs[i].checked){
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if(flag) document.getElementById("form").submit();
+                }
+            }
+        }
     </script>
 </head>
 <body>
@@ -57,65 +73,83 @@
 
     <div style="float: right;margin: 5px">
         <a class="btn btn-primary" href="${pageContext.request.contextPath}/add/staff-add.jsp">添加职员</a>
-        <a class="btn btn-primary" href="../add.html">删除选中</a>
+        <a class="btn btn-primary" href="javascript:void(0);" id="deleteSelected">删除选中</a>
     </div>
-
-    <table border="1" class="table table-bordered table-hover">
-        <tr class="success">
-            <th> </th>
-            <th>编号</th>
-            <th>姓名</th>
-            <th>手机号</th>
-            <th>邮箱</th>
-            <th>负责区域</th>
-            <th>薪资</th>
-            <th>职位</th>
-            <th>操作</th>
-        </tr>
-        <c:forEach items="${staffs}" var="staff" varStatus="s">
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>${s.count}</td>
-                <td>${staff.staff_name}</td>
-                <td>${staff.tel}</td>
-                <td>${staff.email}</td>
-                <td>${staff.address_region}</td>
-                <td>${staff.salary}</td>
-                <td>${staff.position}</td>
-                <td><a class="btn btn-default btn-sm" href="${pageContext.request.contextPath}/StaffFindServlet?id=${staff.id}">修改</a>&nbsp;
-                    <a class="btn btn-default btn-sm" href="javascript:deleteStaff(${staff.id})">删除</a></td>
+    <form id="form" action="${pageContext.request.contextPath}/StaffSelectedDeleteServlet">
+        <table border="1" class="table table-bordered table-hover">
+            <tr class="success">
+                <th> </th>
+                <th>编号</th>
+                <th>姓名</th>
+                <th>手机号</th>
+                <th>邮箱</th>
+                <th>负责区域</th>
+                <th>薪资</th>
+                <th>职位</th>
+                <th>操作</th>
             </tr>
-        </c:forEach>
-    </table>
+
+            <c:forEach items="${page.list}" var="staff" varStatus="s">
+                <tr>
+                    <td><input type="checkbox" name="sid" value="${staff.id}"></td>
+                    <td>${s.count + (page.currentPage - 1) * page.rows}</td>
+                    <td>${staff.staff_name}</td>
+                    <td>${staff.tel}</td>
+                    <td>${staff.email}</td>
+                    <td>${staff.address_region}</td>
+                    <td>${staff.salary}</td>
+                    <td>${staff.position}</td>
+                    <td><a class="btn btn-default btn-sm" href="${pageContext.request.contextPath}/StaffFindServlet?id=${staff.id}">修改</a>&nbsp;
+                        <a class="btn btn-default btn-sm" href="javascript:deleteStaff(${staff.id})">删除</a></td>
+                </tr>
+            </c:forEach>
+        </table>
+    </form>
 
     <div>
         <nav aria-label="Page navigation" style="float: left">
             <ul class="pagination">
-                <li>
-                    <a href="#" aria-label="Previous">
+                <c:if test="${page.currentPage == 1}">
+                    <li class="disabled">
+                </c:if>
+                <c:if test="${page.currentPage != 1}">
+                    <li>
+                </c:if>
+                    <a href="${pageContext.request.contextPath}/StaffFindByPageServlet?currentPage=${page.currentPage - 1}&rows=${page.rows}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
-                <li>
-                    <a href="#" aria-label="Next">
+
+
+                <c:forEach begin="1" end="${page.totalPage}" var="i">
+                    <c:if test="${page.currentPage != i}">
+                        <li><a href="${pageContext.request.contextPath}/StaffFindByPageServlet?currentPage=${i}&rows=${page.rows}">${i}</a></li>
+                    </c:if>
+                    <c:if test="${page.currentPage == i}">
+                        <li class="active"><a href="${pageContext.request.contextPath}/StaffFindByPageServlet?currentPage=${i}&rows=${page.rows}">${i}</a></li>
+                    </c:if>
+                </c:forEach>
+
+                <c:if test="${page.currentPage == page.totalPage}">
+                    <li class="disabled">
+                </c:if>
+                <c:if test="${page.currentPage != page.totalPage}">
+                    <li>
+                </c:if>
+                    <a href="${pageContext.request.contextPath}/StaffFindByPageServlet?currentPage=${page.currentPage + 1}&rows=${page.rows}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
                 <span style="font-size: 20px">
                     共
-                    <c:if test="${empty staffs}">
+                    <c:if test="${empty page}">
                         0
                     </c:if>
-                    <c:if test="${not empty staffs}">
-                        ${staffs.size()}
+                    <c:if test="${not empty page}">
+                        ${page.totalCount}
                     </c:if>
                     条记录,共
-                    <f:formatNumber value="${staffs.size()/4+1}" pattern="0"/>
+                    <f:formatNumber value="${page.totalPage}" pattern="0"/>
                     页
                 </span>
             </ul>

@@ -52,5 +52,17 @@ public class StaffDAOImpl implements StaffDAO {
                 staff.getAddress_region(), staff.getSalary(), staff.getPosition(), staff.getId());
     }
 
+    @Override
+    public int findTotalCount() {
+        String sql = "select count(*) from staff";
+        return template.queryForObject(sql, Integer.class);
+    }
+
+    @Override
+    public List<Staff> findStaffByPage(int start, int rows) {
+        String sql = "select * from staff limit ? , ?";
+        return template.query(sql, new BeanPropertyRowMapper<Staff>(Staff.class), start, rows);
+    }
+
 }
 

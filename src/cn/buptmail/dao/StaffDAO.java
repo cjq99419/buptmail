@@ -20,4 +20,8 @@ public interface StaffDAO {
     Staff findStaffById(int id);
 
     void update(Staff staff);
+
+    int findTotalCount();
+
+    List<Staff> findStaffByPage(int start, int rows);
 }
