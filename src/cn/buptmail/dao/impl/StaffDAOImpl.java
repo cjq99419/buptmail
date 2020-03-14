@@ -91,8 +91,6 @@ public class StaffDAOImpl implements StaffDAO {
         sb.append(" limit ?,? ");
         params.add(start);
         params.add(rows);
-        System.out.println(sb.toString());
-        System.out.println(params);
         return template.query(sb.toString(), new BeanPropertyRowMapper<Staff>(Staff.class), params.toArray());
     }
 

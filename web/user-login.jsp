@@ -51,10 +51,11 @@
             <input id="login" class="btn btn btn-primary" type="submit" value="登录">
         </div>
     </form>
-    <c:if test="${not empty login_error or not empty cc_error}">
+    <c:if test="${not empty login_error or not empty cc_error or not empty login_msg}">
         <div class="alert alert-warning alert-dismissible" role="alert">
             <button type="button" class="close" data-dismiss="alert" >
                 <span>&times;</span></button>
+            <strong>${login_msg}</strong>
             <strong>${login_error}</strong>
             <strong>${cc_error}</strong>
         </div>

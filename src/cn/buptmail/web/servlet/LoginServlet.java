@@ -25,8 +25,8 @@ public class LoginServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String checkCode = request.getParameter("checkCode");
-        System.out.println(username);
         HttpSession session = request.getSession();
+        session.setAttribute("username", username);
         String checkCodeSession = (String) session.getAttribute("checkCodeSession");
         session.removeAttribute("checkCodeSession");
 

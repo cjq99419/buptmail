@@ -33,7 +33,6 @@ public class StaffFindByPageServlet extends HttpServlet {
         }
 
         Map<String, String[]> condition = request.getParameterMap();
-        System.out.println(condition.keySet());
         StaffService service = new StaffServiceImpl();
         Page<Staff> page = service.findStaffByPage(currentPage, rows, condition);
         request.setAttribute("page", page);
