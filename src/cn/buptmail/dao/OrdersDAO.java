@@ -1,7 +1,6 @@
 package cn.buptmail.dao;
 
 import cn.buptmail.domain.Orders;
-import cn.buptmail.domain.User;
 
 import java.util.List;
 

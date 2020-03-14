@@ -58,14 +58,14 @@
     <h3 style="text-align: center">职员信息列表</h3>
 
     <div style="float: left;margin: 5px">
-        <form class="form-inline">
+        <form class="form-inline" action="${pageContext.request.contextPath}/StaffFindByPageServlet" method="post">
             <div class="form-group">
-                <label for="exampleInputName2">编号</label>
-                <input type="text" class="form-control" id="exampleInputName2">
+                <label for="staff_name">姓名</label>
+                <input type="text" class="form-control" value="${condition.staff_name[0]}" name="staff_name" id="staff_name">
             </div>
             <div class="form-group">
-                <label for="exampleInputEmail2">姓名</label>
-                <input type="email" class="form-control" id="exampleInputEmail2">
+                <label for="position">职位</label>
+                <input type="text" class="form-control" value="${condition.position[0]}"-3 name="position" id="position">
             </div>
             <button type="submit" class="btn btn-default">查询</button>
         </form>
@@ -115,7 +115,7 @@
                 <c:if test="${page.currentPage != 1}">
                     <li>
                 </c:if>
-                    <a href="${pageContext.request.contextPath}/StaffFindByPageServlet?currentPage=${page.currentPage - 1}&rows=${page.rows}" aria-label="Previous">
+                    <a href="${pageContext.request.contextPath}/StaffFindByPageServlet?currentPage=${page.currentPage - 1}&rows=${page.rows}&staff_name=${condition.name[0]}&position=${condition.position[0]}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
@@ -123,10 +123,10 @@
 
                 <c:forEach begin="1" end="${page.totalPage}" var="i">
                     <c:if test="${page.currentPage != i}">
-                        <li><a href="${pageContext.request.contextPath}/StaffFindByPageServlet?currentPage=${i}&rows=${page.rows}">${i}</a></li>
+                        <li><a href="${pageContext.request.contextPath}/StaffFindByPageServlet?currentPage=${i}&rows=${page.rows}&staff_name=${condition.name[0]}&position=${condition.position[0]}">${i}</a></li>
                     </c:if>
                     <c:if test="${page.currentPage == i}">
-                        <li class="active"><a href="${pageContext.request.contextPath}/StaffFindByPageServlet?currentPage=${i}&rows=${page.rows}">${i}</a></li>
+                        <li class="active"><a href="${pageContext.request.contextPath}/StaffFindByPageServlet?currentPage=${i}&rows=${page.rows}&staff_name=${condition.name[0]}&position=${condition.position[0]}">${i}</a></li>
                     </c:if>
                 </c:forEach>
 
@@ -136,7 +136,7 @@
                 <c:if test="${page.currentPage != page.totalPage}">
                     <li>
                 </c:if>
-                    <a href="${pageContext.request.contextPath}/StaffFindByPageServlet?currentPage=${page.currentPage + 1}&rows=${page.rows}" aria-label="Next">
+                    <a href="${pageContext.request.contextPath}/StaffFindByPageServlet?currentPage=${page.currentPage + 1}&rows=${page.rows}&staff_name=${condition.name[0]}&position=${condition.position[0]}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>

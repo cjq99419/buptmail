@@ -9,7 +9,6 @@ import cn.buptmail.dao.impl.UserDAOImpl;
 import cn.buptmail.domain.Orders;
 import cn.buptmail.domain.Staff;
 import cn.buptmail.domain.User;
-import com.sun.org.apache.xpath.internal.operations.Or;
 
 import java.util.Date;
 import java.util.Random;

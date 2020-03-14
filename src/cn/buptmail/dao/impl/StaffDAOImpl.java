@@ -2,12 +2,14 @@ package cn.buptmail.dao.impl;
 
 import cn.buptmail.dao.StaffDAO;
 import cn.buptmail.domain.Staff;
-import cn.buptmail.domain.User;
 import cn.buptmail.util.JDBCUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * @author FIRCC
@@ -53,15 +55,45 @@ public class StaffDAOImpl implements StaffDAO {
     }
 
     @Override
-    public int findTotalCount() {
-        String sql = "select count(*) from staff";
-        return template.queryForObject(sql, Integer.class);
+    public int findTotalCount(Map<String, String[]> condition) {
+        String sql = "select count(*) from staff where 1=1";
+        StringBuilder sb = new StringBuilder(sql);
+        Set<String> keySet = condition.keySet();
+        List<Object> params = new ArrayList<Object>();
+        for(String key : keySet){
+            String value = condition.get(key)[0];
+            if("currentPage".equals(key) || "rows".equals(key)) continue;
+            if(value != null && !"".equals(value)){
+                sb.append(" and " + key + " like ?");
+                params.add('%' + value + '%') ;
+            }
+        }
+        System.out.println(sb.toString());
+        System.out.println(params);
+        return template.queryForObject(sb.toString(), Integer.class, params.toArray());
     }
 
     @Override
-    public List<Staff> findStaffByPage(int start, int rows) {
-        String sql = "select * from staff limit ? , ?";
-        return template.query(sql, new BeanPropertyRowMapper<Staff>(Staff.class), start, rows);
+    public List<Staff> findStaffByPage(int start, int rows, Map<String, String[]> condition) {
+        String sql = "select * from staff where 1=1";
+        StringBuilder sb = new StringBuilder(sql);
+        Set<String> keySet = condition.keySet();
+        List<Object> params = new ArrayList<Object>();
+        for(String key : keySet){
+            String value = condition.get(key)[0];
+            if("currentPage".equals(key) || "rows".equals(key)) continue;
+            if(value != null && !"".equals(value)){
+                sb.append(" and " + key + " like ?");
+                params.add('%' + value + '%') ;
+            }
+        }
+
+        sb.append(" limit ?,? ");
+        params.add(start);
+        params.add(rows);
+        System.out.println(sb.toString());
+        System.out.println(params);
+        return template.query(sb.toString(), new BeanPropertyRowMapper<Staff>(Staff.class), params.toArray());
     }
 
 }

@@ -2,7 +2,6 @@ package cn.buptmail.dao.impl;
 
 import cn.buptmail.dao.OrdersDAO;
 import cn.buptmail.domain.Orders;
-import cn.buptmail.domain.Staff;
 import cn.buptmail.util.JDBCUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;

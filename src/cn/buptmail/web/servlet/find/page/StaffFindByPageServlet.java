@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Map;
 
 /**
  * @author FIRCC
@@ -21,9 +22,9 @@ import java.io.IOException;
 @WebServlet("/StaffFindByPageServlet")
 public class StaffFindByPageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setCharacterEncoding("utf-8");
         String currentPage = request.getParameter("currentPage");
         String rows = request.getParameter("rows");
-
         if(currentPage == null || "".equals(currentPage) || (Integer.parseInt(currentPage) <= 0)){
             currentPage = "1";
         }
@@ -31,11 +32,12 @@ public class StaffFindByPageServlet extends HttpServlet {
             rows = "10";
         }
 
+        Map<String, String[]> condition = request.getParameterMap();
+        System.out.println(condition.keySet());
         StaffService service = new StaffServiceImpl();
-        Page<Staff> page = service.findStaffByPage(currentPage, rows);
+        Page<Staff> page = service.findStaffByPage(currentPage, rows, condition);
         request.setAttribute("page", page);
-        System.out.println(page.toString());
-        System.out.println(currentPage);
+        request.setAttribute("condition", condition);
         request.getRequestDispatcher("/list/staff-list.jsp").forward(request, response);
     }
 

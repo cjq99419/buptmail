@@ -43,12 +43,12 @@
     <div style="float: left;margin: 5px">
         <form class="form-inline">
             <div class="form-group">
-                <label for="exampleInputName2">编号</label>
-                <input type="text" class="form-control" id="exampleInputName2">
+                <label for="id">编号</label>
+                <input type="text" class="form-control" id="id">
             </div>
             <div class="form-group">
-                <label for="exampleInputEmail2">寄件人</label>
-                <input type="email" class="form-control" id="exampleInputEmail2">
+                <label for="sender_name">寄件人</label>
+                <input type="email" class="form-control" id="sender_name">
             </div>
             <button type="submit" class="btn btn-default">查询</button>
         </form>

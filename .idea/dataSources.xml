@@ -4,8 +4,14 @@
     <data-source source="LOCAL" name="buptmail" uuid="e3678718-674d-4525-a3c8-26a50ff0314e">
       <driver-ref>mysql.8</driver-ref>
       <synchronize>true</synchronize>
-      <jdbc-driver>com.mysql.jdbc.Driver</jdbc-driver>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
       <jdbc-url>jdbc:mysql://localhost:3306/buptmail</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="buptmail-linux" uuid="3535ebe6-71aa-4ab8-81c5-d47e12309b84">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://39.105.232.1:3306/buptmail</jdbc-url>
     </data-source>
   </component>
 </project>

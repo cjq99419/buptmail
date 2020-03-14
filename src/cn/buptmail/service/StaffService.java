@@ -4,6 +4,7 @@ import cn.buptmail.domain.Page;
 import cn.buptmail.domain.Staff;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author FIRCC
@@ -24,5 +25,5 @@ public interface StaffService {
 
     void deleteSelectedUser(String[] ids);
 
-    Page<Staff> findStaffByPage(String currentPage, String rows);
+    Page<Staff> findStaffByPage(String currentPage, String rows, Map<String, String[]> condition);
 }

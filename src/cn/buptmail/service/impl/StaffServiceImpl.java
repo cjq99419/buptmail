@@ -7,6 +7,7 @@ import cn.buptmail.domain.Staff;
 import cn.buptmail.service.StaffService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author FIRCC
@@ -54,17 +55,16 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public Page<Staff> findStaffByPage(String _currentPage, String _rows) {
+    public Page<Staff> findStaffByPage(String _currentPage, String _rows, Map<String, String[]> condition) {
         int currentPage = Integer.parseInt(_currentPage);
-        System.out.println(currentPage);
         int rows = Integer.parseInt(_rows);
         Page<Staff> page = new Page<>();
         page.setCurrentPage(currentPage);
         page.setRows(rows);
-        int totalCount = dao.findTotalCount();
+        int totalCount = dao.findTotalCount(condition);
         page.setTotalCount(totalCount);
         int start = (currentPage - 1) * rows;
-        List<Staff> list = dao.findStaffByPage(start, rows);
+        List<Staff> list = dao.findStaffByPage(start, rows, condition);
         page.setList(list);
         int totalPage = totalCount % rows == 0 ? totalCount / rows : totalCount / rows + 1;
         page.setTotalPage(totalPage);

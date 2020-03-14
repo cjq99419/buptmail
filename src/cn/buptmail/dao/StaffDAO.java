@@ -3,6 +3,7 @@ package cn.buptmail.dao;
 import cn.buptmail.domain.Staff;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author FIRCC
@@ -21,7 +22,7 @@ public interface StaffDAO {
 
     void update(Staff staff);
 
-    int findTotalCount();
+    int findTotalCount(Map<String, String[]> condition);
 
-    List<Staff> findStaffByPage(int start, int rows);
+    List<Staff> findStaffByPage(int start, int rows, Map<String, String[]> condition);
 }
