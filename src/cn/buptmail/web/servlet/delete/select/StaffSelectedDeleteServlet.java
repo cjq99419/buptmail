@@ -22,8 +22,7 @@ public class StaffSelectedDeleteServlet extends HttpServlet {
         String[] ids = request.getParameterValues("sid");
         StaffService service = new StaffServiceImpl();
         service.deleteSelectedUser(ids);
-
-        response.sendRedirect(request.getContextPath()+"/StaffListServlet");
+        request.getRequestDispatcher("/StaffFindByPageServlet").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -31,8 +32,24 @@ public class StaffFindByPageServlet extends HttpServlet {
         if(rows == null || "".equals(rows)){
             rows = "10";
         }
+        String[] current_page = new String[1];
+        String[] row = new String[1];
+        current_page[0] = currentPage;
+        row[0] = rows;
+        Map<String, String[]> map = request.getParameterMap();
+        Map<String, String[]> condition = new HashMap<>();
+        condition.put("currentPage", current_page);
+        condition.put("rows", row);
 
-        Map<String, String[]> condition = request.getParameterMap();
+        if(map.containsKey("staff_name_condition"))
+            condition.put("staff_name", map.get("staff_name_condition"));
+        else if(map.containsKey("staff_name"))
+            condition.put("staff_name", map.get("staff_name"));
+        if(map.containsKey("position_condition"))
+            condition.put("position", map.get("position_condition"));
+        else if(map.containsKey("position"))
+            condition.put("position", map.get("position"));
+
         StaffService service = new StaffServiceImpl();
         Page<Staff> page = service.findStaffByPage(currentPage, rows, condition);
         request.setAttribute("page", page);

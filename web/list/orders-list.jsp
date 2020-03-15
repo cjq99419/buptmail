@@ -34,6 +34,22 @@
                 window.location.href = "${pageContext.request.contextPath}/OrdersDeleteServlet?id="+id;
             }
         }
+
+        window.onload = function () {
+            document.getElementById("deleteSelected").onclick = function () {
+                if(confirm("确定删除选中数据？")){
+                    let cbs = document.getElementsByName("oid");
+                    let flag = false;
+                    for(let i = 0; i < cbs.length; i++){
+                        if(cbs[i].checked){
+                            flag = true;
+                            break;
+                        }
+                    }
+                    if(flag) document.getElementById("form").submit();
+                }
+            }
+        }
     </script>
 </head>
 <body>
@@ -41,14 +57,14 @@
     <h3 style="text-align: center">订单信息列表</h3>
 
     <div style="float: left;margin: 5px">
-        <form class="form-inline">
-            <div class="form-group">
-                <label for="id">编号</label>
-                <input type="text" class="form-control" id="id">
-            </div>
+        <form class="form-inline" action="${pageContext.request.contextPath}/OrdersFindByPageServlet" method="post">
             <div class="form-group">
                 <label for="sender_name">寄件人</label>
-                <input type="email" class="form-control" id="sender_name">
+                <input type="text" class="form-control" value="${condition.sender_name[0]}" id="sender_name" name="sender_name">
+            </div>
+            <div class="form-group">
+                <label for="recipient_name">收件人</label>
+                <input type="text" class="form-control" value="${condition.sender_name[0]}" id="recipient_name" name="recipient_name">
             </div>
             <button type="submit" class="btn btn-default">查询</button>
         </form>
@@ -56,70 +72,86 @@
 
     <div style="float: right;margin: 5px">
         <a class="btn btn-primary" href="${pageContext.request.contextPath}/add/orders-add.jsp">添加订单</a>
-        <a class="btn btn-primary" href="../add.html">删除选中</a>
+        <a class="btn btn-primary" href="javascript:void(0);" id="deleteSelected">删除选中</a>
     </div>
-
-    <table border="1" class="table table-bordered table-hover">
-        <tr class="success">
-            <th> </th>
-            <th>编号</th>
-            <th>寄件人</th>
-            <th>收件人</th>
-            <th>类型</th>
-            <th>运费</th>
-            <th>重量</th>
-            <th>状态</th>
-            <th>日期</th>
-            <th>操作</th>
-        </tr>
-        <c:forEach items="${orders}" var="order" varStatus="s">
-            <tr>
-                <td><input type="checkbox"></td>
-                <td>${s.count}</td>
-                <td>${order.sender_name}</td>
-                <td>${order.recipient_name}</td>
-                <td>${order.type}</td>
-                <td>${order.price}</td>
-                <td>${order.weight}</td>
-                <td>${order.status}</td>
-                <td>
-                    <f:formatDate value="${order.date}" pattern="yyyy年MM月dd日" />
-                </td>
-                <td><a class="btn btn-default btn-sm" href="${pageContext.request.contextPath}/OrdersFindServlet?id=${order.id}">修改</a>&nbsp;
-                    <a class="btn btn-default btn-sm" href="javascript:deleteOrder(${order.id})">删除</a></td>
+    <form id="form" action="${pageContext.request.contextPath}/OrdersSelectedDeleteServlet">
+        <table border="1" class="table table-bordered table-hover">
+            <tr class="success">
+                <th> </th>
+                <th>编号</th>
+                <th>寄件人</th>
+                <th>收件人</th>
+                <th>类型</th>
+                <th>运费</th>
+                <th>重量</th>
+                <th>状态</th>
+                <th>日期</th>
+                <th>操作</th>
             </tr>
-        </c:forEach>
-
-    </table>
-
+            <c:forEach items="${page.list}" var="order" varStatus="s">
+                <tr>
+                    <td><input type="checkbox"v name="oid" value="${order.id}"></td>
+                    <td>${s.count + (page.currentPage - 1) * page.rows}</td>
+                    <td>${order.sender_name}</td>
+                    <td>${order.recipient_name}</td>
+                    <td>${order.type}</td>
+                    <td>${order.price}</td>
+                    <td>${order.weight}</td>
+                    <td>${order.status}</td>
+                    <td>
+                        <f:formatDate value="${order.date}" pattern="yyyy年MM月dd日" />
+                    </td>
+                    <td><a class="btn btn-default btn-sm" href="${pageContext.request.contextPath}/OrdersFindServlet?id=${order.id}">修改</a>&nbsp;
+                        <a class="btn btn-default btn-sm" href="javascript:deleteOrder(${order.id})">删除</a></td>
+                </tr>
+            </c:forEach>
+        </table>
+    </form>
+    
     <div>
         <nav aria-label="Page navigation" style="float: left">
             <ul class="pagination">
+                <c:if test="${page.currentPage == 1}">
+                <li class="disabled">
+                    </c:if>
+                    <c:if test="${page.currentPage != 1}">
                 <li>
-                    <a href="#" aria-label="Previous">
+                    </c:if>
+                    <a href="${pageContext.request.contextPath}/OrdersFindByPageServlet?currentPage=${page.currentPage - 1}&rows=${page.rows}&staff_name=${condition.name[0]}&position=${condition.position[0]}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#">5</a></li>
+
+
+                <c:forEach begin="1" end="${page.totalPage}" var="i">
+                    <c:if test="${page.currentPage != i}">
+                        <li><a href="${pageContext.request.contextPath}/OrdersFindByPageServlet?currentPage=${i}&rows=${page.rows}&staff_name=${condition.name[0]}&position=${condition.position[0]}">${i}</a></li>
+                    </c:if>
+                    <c:if test="${page.currentPage == i}">
+                        <li class="active"><a href="${pageContext.request.contextPath}/OrdersFindByPageServlet?currentPage=${i}&rows=${page.rows}&staff_name=${condition.name[0]}&position=${condition.position[0]}">${i}</a></li>
+                    </c:if>
+                </c:forEach>
+
+                <c:if test="${page.currentPage == page.totalPage}">
+                <li class="disabled">
+                    </c:if>
+                    <c:if test="${page.currentPage != page.totalPage}">
                 <li>
-                    <a href="#" aria-label="Next">
+                    </c:if>
+                    <a href="${pageContext.request.contextPath}/OrdersFindByPageServlet?currentPage=${page.currentPage + 1}&rows=${page.rows}&staff_name=${condition.name[0]}&position=${condition.position[0]}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
                 <span style="font-size: 20px">
                     共
-                    <c:if test="${empty orders}">
+                    <c:if test="${empty page}">
                         0
                     </c:if>
-                    <c:if test="${not empty orders}">
-                        ${orders.size()}
+                    <c:if test="${not empty page}">
+                        ${page.totalCount}
                     </c:if>
                     条记录,共
-                    <f:formatNumber value="${orders.size()/4+1}" pattern="0"/>
+                    <f:formatNumber value="${page.totalPage}" pattern="0"/>
                     页
                 </span>
             </ul>

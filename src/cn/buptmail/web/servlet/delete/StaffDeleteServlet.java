@@ -23,7 +23,7 @@ public class StaffDeleteServlet extends HttpServlet {
         String id = request.getParameter("id");
         StaffService service = new StaffServiceImpl();
         service.deleteStaff(id);
-        response.sendRedirect(request.getContextPath()+"/StaffListServlet");
+        request.getRequestDispatcher("/StaffFindByPageServlet").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

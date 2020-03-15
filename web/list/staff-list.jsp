@@ -32,7 +32,7 @@
     <script type="text/javascript">
         function deleteStaff(id) {
             if(confirm("是否确定删除?")){
-                window.location.href = "${pageContext.request.contextPath}/StaffDeleteServlet?id="+id;
+                window.location.href = "${pageContext.request.contextPath}/StaffDeleteServlet?id="+id+"&currentPage=${page.currentPage}&rows=${page.rows}&staff_name=${condition.name[0]}&position=${condition.position[0]}";
             }
         }
 
@@ -65,7 +65,7 @@
             </div>
             <div class="form-group">
                 <label for="position">职位</label>
-                <input type="text" class="form-control" value="${condition.position[0]}"-3 name="position" id="position">
+                <input type="text" class="form-control" value="${condition.position[0]}" name="position" id="position">
             </div>
             <button type="submit" class="btn btn-default">查询</button>
         </form>
@@ -75,7 +75,14 @@
         <a class="btn btn-primary" href="${pageContext.request.contextPath}/add/staff-add.jsp">添加职员</a>
         <a class="btn btn-primary" href="javascript:void(0);" id="deleteSelected">删除选中</a>
     </div>
+
+
     <form id="form" action="${pageContext.request.contextPath}/StaffSelectedDeleteServlet">
+        <input type="hidden" name="currentPage" value="${page.currentPage}">
+        <input type="hidden" name="rows" value="${page.rows}">
+        <input type="hidden" name="staff_name" value="${condition.name[0]}">
+        <input type="hidden" name="position" value="${condition.position[0]}">
+
         <table border="1" class="table table-bordered table-hover">
             <tr class="success">
                 <th> </th>
@@ -99,7 +106,7 @@
                     <td>${staff.address_region}</td>
                     <td>${staff.salary}</td>
                     <td>${staff.position}</td>
-                    <td><a class="btn btn-default btn-sm" href="${pageContext.request.contextPath}/StaffFindServlet?id=${staff.id}">修改</a>&nbsp;
+                    <td><a class="btn btn-default btn-sm" href="${pageContext.request.contextPath}/StaffFindServlet?id=${staff.id}&currentPage=${page.currentPage}&rows=${page.rows}&staff_name_condition=${condition.name[0]}&position_condition=${condition.position[0]}">修改</a>&nbsp;
                         <a class="btn btn-default btn-sm" href="javascript:deleteStaff(${staff.id})">删除</a></td>
                 </tr>
             </c:forEach>

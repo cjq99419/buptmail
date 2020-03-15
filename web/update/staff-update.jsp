@@ -29,6 +29,10 @@
     <form action="${pageContext.request.contextPath}/StaffUpdateServlet" method="post">
 
         <input type="hidden" name="id" value="${staff.id}">
+        <input type="hidden" name="currentPage" value="${currentPage}">
+        <input type="hidden" name="rows" value="${rows}">
+        <input type="hidden" name="staff_name_condition" value="${staff_name_condition}">
+        <input type="hidden" name="position_condition" value="${position_condition}">
 
         <div class="form-group">
             <label for="staff_name">姓名：</label>
@@ -71,7 +75,7 @@
 
         <div class="form-group" style="text-align: center">
             <input class="btn btn-primary" type="submit" value="提交" />
-            <input class="btn btn-default" type="button" onclick="window.location.href='${pageContext.request.contextPath}/StaffListServlet'" value="返回" />
+            <input class="btn btn-default" type="button" onclick="window.location.href='${pageContext.request.contextPath}/StaffFindByPageServlet?currentPage=${currentPage}&rows=${rows}&staff_name=${staff_name_condition}&position=${position_condition}'" value="返回" />
         </div>
     </form>
 </div>

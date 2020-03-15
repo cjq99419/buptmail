@@ -39,7 +39,7 @@ public class StaffAddServlet extends HttpServlet {
         StaffService service = new StaffServiceImpl();
         service.addStaff(staff);
 
-        response.sendRedirect(request.getContextPath()+"/StaffListServlet");
+        response.sendRedirect(request.getContextPath()+"/StaffFindByPageServlet");
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

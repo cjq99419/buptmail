@@ -59,17 +59,15 @@ public class StaffDAOImpl implements StaffDAO {
         String sql = "select count(*) from staff where 1=1";
         StringBuilder sb = new StringBuilder(sql);
         Set<String> keySet = condition.keySet();
-        List<Object> params = new ArrayList<Object>();
+        List<Object> params = new ArrayList<>();
         for(String key : keySet){
             String value = condition.get(key)[0];
-            if("currentPage".equals(key) || "rows".equals(key)) continue;
+            if("currentPage".equals(key) || "rows".equals(key) || "sid".equals(key) || "id".equals(key)) continue;
             if(value != null && !"".equals(value)){
                 sb.append(" and " + key + " like ?");
                 params.add('%' + value + '%') ;
             }
         }
-        System.out.println(sb.toString());
-        System.out.println(params);
         return template.queryForObject(sb.toString(), Integer.class, params.toArray());
     }
 
@@ -81,7 +79,7 @@ public class StaffDAOImpl implements StaffDAO {
         List<Object> params = new ArrayList<Object>();
         for(String key : keySet){
             String value = condition.get(key)[0];
-            if("currentPage".equals(key) || "rows".equals(key)) continue;
+            if("currentPage".equals(key) || "rows".equals(key) || "sid".equals(key) || "id".equals(key)) continue;
             if(value != null && !"".equals(value)){
                 sb.append(" and " + key + " like ?");
                 params.add('%' + value + '%') ;

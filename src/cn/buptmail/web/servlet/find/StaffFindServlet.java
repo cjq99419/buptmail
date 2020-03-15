@@ -23,6 +23,11 @@ public class StaffFindServlet extends HttpServlet {
         String id = request.getParameter("id");
         StaffService service = new StaffServiceImpl();
         Staff staff = service.findStaffById(id);
+
+        request.setAttribute("currentPage", request.getParameter("currentPage"));
+        request.setAttribute("rows", request.getParameter("rows"));
+        request.setAttribute("staff_name_condition", request.getParameter("staff_name_condition"));
+        request.setAttribute("position_condition", request.getParameter("position_condition"));
         request.setAttribute("staff", staff);
         request.getRequestDispatcher("/update/staff-update.jsp").forward(request, response);
     }

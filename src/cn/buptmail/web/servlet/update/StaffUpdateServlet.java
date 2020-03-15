@@ -35,8 +35,7 @@ public class StaffUpdateServlet extends HttpServlet {
         }
         StaffService service = new StaffServiceImpl();
         service.updateStaff(staff);
-
-        response.sendRedirect(request.getContextPath()+"/StaffListServlet");
+        request.getRequestDispatcher("/StaffFindByPageServlet").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
