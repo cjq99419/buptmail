@@ -24,9 +24,7 @@ import java.util.Map;
 public class StaffAddServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
-
         Map<String, String[]> map = request.getParameterMap();
-
         Staff staff = new Staff();
         try {
             BeanUtils.populate(staff, map);
@@ -39,7 +37,7 @@ public class StaffAddServlet extends HttpServlet {
         StaffService service = new StaffServiceImpl();
         service.addStaff(staff);
 
-        response.sendRedirect(request.getContextPath()+"/StaffFindByPageServlet");
+        request.getRequestDispatcher("/StaffFindByPageServlet").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

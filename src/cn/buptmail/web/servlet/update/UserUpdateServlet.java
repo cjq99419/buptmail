@@ -38,8 +38,7 @@ public class UserUpdateServlet extends HttpServlet {
         }
         UserService service = new UserServiceImpl();
         service.updateUser(user);
-
-        response.sendRedirect(request.getContextPath()+"/UserListServlet");
+        request.getRequestDispatcher("/UserFindByPageServlet").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

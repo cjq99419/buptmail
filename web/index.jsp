@@ -29,10 +29,10 @@
 </div>
 <div align="center">
     <a
-            href="${pageContext.request.contextPath}/UserListServlet" style="text-decoration:none;font-size:33px">查询所有用户信息
+            href="${pageContext.request.contextPath}/UserFindByPageServlet" style="text-decoration:none;font-size:33px">查询所有用户信息
     </a><br>
     <a
-            href="${pageContext.request.contextPath}/OrdersListServlet" style="text-decoration:none;font-size:33px">查询所有订单信息
+            href="${pageContext.request.contextPath}/OrdersFindByPageServlet" style="text-decoration:none;font-size:33px">查询所有订单信息
     </a><br>
     <a
             href="${pageContext.request.contextPath}/StaffFindByPageServlet" style="text-decoration:none;font-size:33px">查询所有职员信息

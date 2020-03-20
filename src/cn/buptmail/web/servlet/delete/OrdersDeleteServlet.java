@@ -23,7 +23,7 @@ public class OrdersDeleteServlet extends HttpServlet {
         String id = request.getParameter("id");
         OrdersService service = new OrdersServiceImpl();
         service.deleteOrder(id);
-        response.sendRedirect(request.getContextPath()+"/OrdersListServlet");
+        request.getRequestDispatcher("/OrdersFindByPageServlet").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

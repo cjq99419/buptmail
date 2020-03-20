@@ -1,7 +1,7 @@
 package cn.buptmail.web.servlet.delete.select;
 
-import cn.buptmail.service.StaffService;
-import cn.buptmail.service.impl.StaffServiceImpl;
+import cn.buptmail.service.UserService;
+import cn.buptmail.service.impl.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,13 +16,13 @@ import java.io.IOException;
  * @date 2020/3/12 0012 下午 03:43
  * @Notes NULL
  */
-@WebServlet("/StaffSelectedDeleteServlet")
-public class StaffSelectedDeleteServlet extends HttpServlet {
+@WebServlet("/UserSelectedDeleteServlet")
+public class UserSelectedDeleteServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String[] ids = request.getParameterValues("sid");
-        StaffService service = new StaffServiceImpl();
-        service.deleteSelectedStaff(ids);
-        request.getRequestDispatcher("/StaffFindByPageServlet").forward(request, response);
+        String[] ids = request.getParameterValues("uid");
+        UserService service = new UserServiceImpl();
+        service.deleteSelectedUser(ids);
+        request.getRequestDispatcher("/UserFindByPageServlet").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -26,6 +26,11 @@ public class UserFindServlet extends HttpServlet {
         String id = request.getParameter("id");
         UserService service = new UserServiceImpl();
         User user = service.findUserById(id);
+
+        request.setAttribute("currentPage", request.getParameter("currentPage"));
+        request.setAttribute("rows", request.getParameter("rows"));
+        request.setAttribute("name_condition", request.getParameter("name_condition"));
+        request.setAttribute("tel_condition", request.getParameter("tel_condition"));
         request.setAttribute("user", user);
         request.getRequestDispatcher("/update/user-update.jsp").forward(request, response);
     }

@@ -1,8 +1,11 @@
 package cn.buptmail.service;
 
+import cn.buptmail.domain.Page;
+import cn.buptmail.domain.Staff;
 import cn.buptmail.domain.User;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author FIRCC
@@ -12,6 +15,7 @@ import java.util.List;
  */
 public interface UserService {
     List<User> findAll();
+
     User login(User user);
 
     void addUser(User user);
@@ -21,4 +25,8 @@ public interface UserService {
     void updateUser(User user);
 
     User findUserById(String id);
+
+    void deleteSelectedUser(String[] ids);
+
+    Page<User> findUserByPage(String _currentPage, String _rows, Map<String, String[]> condition);
 }

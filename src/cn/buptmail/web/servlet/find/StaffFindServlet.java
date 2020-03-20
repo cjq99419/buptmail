@@ -29,6 +29,7 @@ public class StaffFindServlet extends HttpServlet {
         request.setAttribute("staff_name_condition", request.getParameter("staff_name_condition"));
         request.setAttribute("position_condition", request.getParameter("position_condition"));
         request.setAttribute("staff", staff);
+
         request.getRequestDispatcher("/update/staff-update.jsp").forward(request, response);
     }
 

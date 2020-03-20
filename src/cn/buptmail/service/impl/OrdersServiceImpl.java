@@ -3,10 +3,14 @@ package cn.buptmail.service.impl;
 import cn.buptmail.dao.OrdersDAO;
 import cn.buptmail.dao.impl.OrdersDAOImpl;
 import cn.buptmail.domain.Orders;
+import cn.buptmail.domain.Page;
+import cn.buptmail.domain.Staff;
 import cn.buptmail.service.OrdersService;
+import com.sun.org.apache.xpath.internal.operations.Or;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author FIRCC
@@ -51,5 +55,30 @@ public class OrdersServiceImpl implements OrdersService {
     @Override
     public Orders findOrdersById(String id) {
         return dao.findOrdersById(Integer.parseInt(id));
+    }
+
+    @Override
+    public void deleteSelectedOrders(String[] ids) {
+        for(String id : ids){
+            deleteOrder(id);
+        }
+    }
+
+    @Override
+    public Page<Orders> findOrdersByPage(String _currentPage, String _rows, Map<String, String[]> condition) {
+        int currentPage = Integer.parseInt(_currentPage);
+        int rows = Integer.parseInt(_rows);
+        Page<Orders> page = new Page<>();
+        page.setCurrentPage(currentPage);
+        page.setRows(rows);
+        int totalCount = dao.findTotalCount(condition);
+        page.setTotalCount(totalCount);
+        if(totalCount == 0) return null;
+        int start = (currentPage - 1) * rows;
+        List<Orders> list = dao.findOrdersByPage(start, rows, condition);
+        page.setList(list);
+        int totalPage = totalCount % rows == 0 ? totalCount / rows : totalCount / rows + 1;
+        page.setTotalPage(totalPage);
+        return page;
     }
 }

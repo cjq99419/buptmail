@@ -24,9 +24,7 @@ import java.util.Map;
 public class UserAddServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
-
         Map<String, String[]> map = request.getParameterMap();
-
         User user = new User();
         try {
             BeanUtils.populate(user, map);
@@ -39,7 +37,7 @@ public class UserAddServlet extends HttpServlet {
         UserService service = new UserServiceImpl();
         service.addUser(user);
 
-        response.sendRedirect(request.getContextPath()+"/UserListServlet");
+        request.getRequestDispatcher("/UserFindByPageServlet").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

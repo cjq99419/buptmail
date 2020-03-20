@@ -13,7 +13,6 @@
     width: 默认宽度与设备的宽度相同
     initial-scale: 初始的缩放比，为1:1 -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>修改职员信息</title>
 
     <!-- 1. 导入CSS的全局样式 -->
@@ -23,6 +22,7 @@
     <!-- 3. 导入bootstrap的js文件 -->
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 </head>
+
 <body>
 <div class="container">
     <h3>修改职员信息</h3>

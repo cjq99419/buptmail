@@ -48,7 +48,7 @@ public class StaffServiceImpl implements StaffService {
     }
 
     @Override
-    public void deleteSelectedUser(String[] ids) {
+    public void deleteSelectedStaff(String[] ids) {
         for(String id : ids){
             deleteStaff(id);
         }
@@ -63,6 +63,7 @@ public class StaffServiceImpl implements StaffService {
         page.setRows(rows);
         int totalCount = dao.findTotalCount(condition);
         page.setTotalCount(totalCount);
+        if(totalCount == 0) return null;
         int start = (currentPage - 1) * rows;
         List<Staff> list = dao.findStaffByPage(start, rows, condition);
         page.setList(list);

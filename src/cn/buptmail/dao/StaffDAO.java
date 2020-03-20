@@ -18,9 +18,9 @@ public interface StaffDAO {
 
     void delete(int id);
 
-    Staff findStaffById(int id);
-
     void update(Staff staff);
+
+    Staff findStaffById(int id);
 
     int findTotalCount(Map<String, String[]> condition);
 

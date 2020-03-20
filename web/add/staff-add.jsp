@@ -13,8 +13,7 @@
     width: 默认宽度与设备的宽度相同
     initial-scale: 初始的缩放比，为1:1 -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>添加职员</title>
+     <title>添加职员</title>
 
     <!-- 1. 导入CSS的全局样式 -->
     <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
@@ -23,10 +22,12 @@
     <!-- 3. 导入bootstrap的js文件 -->
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 </head>
+
 <body>
 <div class="container">
     <h3>添加职员</h3>
     <form action="${pageContext.request.contextPath}/StaffAddServlet" method="post">
+
         <div class="form-group">
             <label for="staff_name">姓名：</label>
             <input type="text" class="form-control" id="staff_name" name="staff_name" placeholder="请输入姓名">
@@ -60,10 +61,17 @@
             </select>
         </div>
 
+        <%
+          String currentPage = request.getParameter("currentPage");
+          String rows = request.getParameter("rows");
+          String staff_name = request.getParameter("staff_name");
+          String position = request.getParameter("position");
+        %>
+        
         <div class="form-group" style="text-align: center">
             <input class="btn btn-primary" type="submit" value="提交" />
             <input class="btn btn-default" type="reset" value="重置" />
-            <input class="btn btn-default" type="button" value="返回" />
+            <input class="btn btn-default" type="button" onclick="window.location.href='${pageContext.request.contextPath}/StaffFindByPageServlet?currentPage=<%=currentPage%>&rows=<%=rows%>&staff_name=<%=staff_name%>&position=<%=position%>'"  value="返回" />
         </div>
     </form>
 </div>

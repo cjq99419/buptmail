@@ -7,7 +7,7 @@ import cn.buptmail.util.JDBCUtils;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * @author FIRCC
@@ -75,4 +75,42 @@ public class UserDAOImpl implements UserDAO {
         String sql = "select * from user where id=?";
         return template.queryForObject(sql, new BeanPropertyRowMapper<User>(User.class), id);
 }
+
+    @Override
+    public int findTotalCount(Map<String, String[]> condition) {
+        String sql = "select count(*) from user where 1=1";
+        StringBuilder sb = new StringBuilder(sql);
+        Set<String> keySet = condition.keySet();
+        List<Object> params = new ArrayList<>();
+        for(String key : keySet){
+            String value = condition.get(key)[0];
+            if("currentPage".equals(key) || "rows".equals(key) || "uid".equals(key) || "id".equals(key)) continue;
+            if(value != null && !"".equals(value)){
+                sb.append(" and " + key + " like ?");
+                params.add('%' + value + '%') ;
+            }
+        }
+        return template.queryForObject(sb.toString(), Integer.class, params.toArray());
+    }
+
+    @Override
+    public List<User> findUserByPage(int start, int rows, Map<String, String[]> condition) {
+        String sql = "select * from user where 1=1";
+        StringBuilder sb = new StringBuilder(sql);
+        Set<String> keySet = condition.keySet();
+        List<Object> params = new ArrayList<Object>();
+        for(String key : keySet){
+            String value = condition.get(key)[0];
+            if("currentPage".equals(key) || "rows".equals(key) || "uid".equals(key) || "id".equals(key)) continue;
+            if(value != null && !"".equals(value)){
+                sb.append(" and " + key + " like ?");
+                params.add('%' + value + '%') ;
+            }
+        }
+
+        sb.append(" limit ?,? ");
+        params.add(start);
+        params.add(rows);
+        return template.query(sb.toString(), new BeanPropertyRowMapper<User>(User.class), params.toArray());
+    }
 }

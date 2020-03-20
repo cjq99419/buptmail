@@ -35,8 +35,7 @@ public class OrdersUpdateServlet extends HttpServlet {
         }
         OrdersService service = new OrdersServiceImpl();
         service.updateOrder(order);
-
-        response.sendRedirect(request.getContextPath()+"/OrdersListServlet");
+        request.getRequestDispatcher("/OrdersFindByPageServlet").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -13,7 +13,6 @@
     width: 默认宽度与设备的宽度相同
     initial-scale: 初始的缩放比，为1:1 -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>添加用户</title>
 
     <!-- 1. 导入CSS的全局样式 -->
@@ -23,6 +22,7 @@
     <!-- 3. 导入bootstrap的js文件 -->
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 </head>
+
 <body>
 <div class="container">
     <h3>添加用户</h3>
@@ -47,10 +47,17 @@
             <input type="text" class="form-control" id="email" name="email" placeholder="请输入邮箱"/>
         </div>
 
+        <%
+            String currentPage = request.getParameter("currentPage");
+            String rows = request.getParameter("rows");
+            String name = request.getParameter("name");
+            String tel = request.getParameter("tel");
+        %>
+
         <div class="form-group" style="text-align: center">
             <input class="btn btn-primary" type="submit" value="提交" />
             <input class="btn btn-default" type="reset" value="重置" />
-            <input class="btn btn-default" type="button" value="返回" />
+            <input class="btn btn-default" type="button" onclick="window.location.href='${pageContext.request.contextPath}/UserFindByPageServlet?currentPage=<%=currentPage%>&rows=<%=rows%>&name=<%=name%>&tel=<%=tel%>'" value="返回"/>
         </div>
     </form>
 </div>

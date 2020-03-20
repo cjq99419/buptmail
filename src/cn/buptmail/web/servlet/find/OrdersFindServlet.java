@@ -26,7 +26,13 @@ public class OrdersFindServlet extends HttpServlet {
         String id = request.getParameter("id");
         OrdersService service = new OrdersServiceImpl();
         Orders orders = service.findOrdersById(id);
+
+        request.setAttribute("currentPage", request.getParameter("currentPage"));
+        request.setAttribute("rows", request.getParameter("rows"));
+        request.setAttribute("sender_name_condition", request.getParameter("sender_name_condition"));
+        request.setAttribute("recipient_name_condition", request.getParameter("recipient_name_condition"));
         request.setAttribute("orders", orders);
+
         request.getRequestDispatcher("/update/orders-update.jsp").forward(request, response);
     }
 

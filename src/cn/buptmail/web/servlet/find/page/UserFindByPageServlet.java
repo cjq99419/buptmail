@@ -1,9 +1,9 @@
 package cn.buptmail.web.servlet.find.page;
 
 import cn.buptmail.domain.Page;
-import cn.buptmail.domain.Staff;
-import cn.buptmail.service.StaffService;
-import cn.buptmail.service.impl.StaffServiceImpl;
+import cn.buptmail.domain.User;
+import cn.buptmail.service.UserService;
+import cn.buptmail.service.impl.UserServiceImpl;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -21,8 +21,8 @@ import java.util.Map;
  * @date 2020/3/12 0012 下午 04:35
  * @Notes NULL
  */
-@WebServlet("/StaffFindByPageServlet")
-public class StaffFindByPageServlet extends HttpServlet {
+@WebServlet("/UserFindByPageServlet")
+public class UserFindByPageServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         String currentPage = request.getParameter("currentPage");
@@ -30,7 +30,6 @@ public class StaffFindByPageServlet extends HttpServlet {
         if(currentPage == null || "".equals(currentPage) || (Integer.parseInt(currentPage) <= 0)){
             currentPage = "1";
         }
-
         if(rows == null || "".equals(rows)){
             rows = "10";
         }
@@ -43,27 +42,27 @@ public class StaffFindByPageServlet extends HttpServlet {
         condition.put("currentPage", current_page);
         condition.put("rows", row);
 
-        if(map.containsKey("staff_name_condition"))
-            condition.put("staff_name", map.get("staff_name_condition"));
-        else if(map.containsKey("staff_name"))
-            condition.put("staff_name", map.get("staff_name"));
-        if(map.containsKey("position_condition"))
-            condition.put("position", map.get("position_condition"));
-        else if(map.containsKey("position"))
-            condition.put("position", map.get("position"));
+        if(map.containsKey("name_condition"))
+            condition.put("name", map.get("name_condition"));
+        else if(map.containsKey("name"))
+            condition.put("name", map.get("name"));
+        if(map.containsKey("tel_condition"))
+            condition.put("tel", map.get("tel_condition"));
+        else if(map.containsKey("tel"))
+            condition.put("tel", map.get("tel"));
 
-        StaffService service = new StaffServiceImpl();
-        Page<Staff> page = service.findStaffByPage(currentPage, rows, condition);
+        UserService service = new UserServiceImpl();
+        Page<User> page = service.findUserByPage(currentPage, rows, condition);
 
-        if(page!= null && page.getTotalPage() < Integer.parseInt(currentPage)) {
+        if(page != null && page.getTotalPage() < Integer.parseInt(currentPage)) {
             current_page[0] = currentPage;
             condition.put("currentPage", current_page);
             int currentPg = Integer.parseInt(currentPage) - 1;
-            page = service.findStaffByPage(String.valueOf(currentPg), rows, condition);
+            page = service.findUserByPage(String.valueOf(currentPg), rows, condition);
         }
         request.setAttribute("page", page);
         request.setAttribute("condition", condition);
-        request.getRequestDispatcher("/list/staff-list.jsp").forward(request, response);
+        request.getRequestDispatcher("/list/user-list.jsp").forward(request, response);
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

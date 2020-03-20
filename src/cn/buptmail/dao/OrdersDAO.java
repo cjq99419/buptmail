@@ -1,8 +1,10 @@
 package cn.buptmail.dao;
 
 import cn.buptmail.domain.Orders;
+import cn.buptmail.domain.Staff;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author FIRCC
@@ -21,4 +23,8 @@ public interface OrdersDAO {
     void update(Orders order);
 
     Orders findOrdersById(int id);
+
+    int findTotalCount(Map<String, String[]> condition);
+
+    List<Orders> findOrdersByPage(int start, int rows, Map<String, String[]> condition);
 }

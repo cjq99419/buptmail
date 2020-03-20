@@ -19,11 +19,11 @@ public interface StaffService {
 
     void deleteStaff(String id);
 
-    Staff findStaffById(String id);
-
     void updateStaff(Staff staff);
 
-    void deleteSelectedUser(String[] ids);
+    Staff findStaffById(String id);
 
-    Page<Staff> findStaffByPage(String currentPage, String rows, Map<String, String[]> condition);
+    void deleteSelectedStaff(String[] ids);
+
+    Page<Staff> findStaffByPage(String _currentPage, String _rows, Map<String, String[]> condition);
 }

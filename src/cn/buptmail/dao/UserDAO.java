@@ -1,10 +1,12 @@
 package cn.buptmail.dao;
 
+import cn.buptmail.domain.Staff;
 import cn.buptmail.domain.User;
 import cn.buptmail.util.JDBCUtils;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author FIRCC
@@ -27,4 +29,8 @@ public interface UserDAO {
     void update(User user);
 
     User findUserById(int id);
+
+    int findTotalCount(Map<String, String[]> condition);
+
+    List<User> findUserByPage(int start, int rows, Map<String, String[]> condition);
 }

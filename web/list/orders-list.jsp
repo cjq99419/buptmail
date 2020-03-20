@@ -1,4 +1,5 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <%@ taglib prefix="f" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
@@ -13,8 +14,7 @@
     width: 默认宽度与设备的宽度相同
     initial-scale: 初始的缩放比，为1:1 -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <title>用户信息管理系统</title>
+    <title>订单信息管理系统</title>
 
     <!-- 1. 导入CSS的全局样式 -->
     <link href="${pageContext.request.contextPath}/css/bootstrap.min.css" rel="stylesheet">
@@ -22,6 +22,7 @@
     <script src="${pageContext.request.contextPath}/js/jquery-2.1.0.min.js"></script>
     <!-- 3. 导入bootstrap的js文件 -->
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+
     <style type="text/css">
         td, th {
             text-align: center;
@@ -31,7 +32,7 @@
     <script type="text/javascript">
         function deleteOrder(id) {
             if(confirm("是否确定删除?")){
-                window.location.href = "${pageContext.request.contextPath}/OrdersDeleteServlet?id="+id;
+                window.location.href = "${pageContext.request.contextPath}/OrdersDeleteServlet?id="+id+"&currentPage=${page.currentPage}&rows=${page.rows}&sender_name=${condition.sender_name[0]}&recipient_name=${condition.recipient_name[0]}";
             }
         }
 
@@ -52,6 +53,7 @@
         }
     </script>
 </head>
+
 <body>
 <div class="container">
     <h3 style="text-align: center">订单信息列表</h3>
@@ -59,22 +61,28 @@
     <div style="float: left;margin: 5px">
         <form class="form-inline" action="${pageContext.request.contextPath}/OrdersFindByPageServlet" method="post">
             <div class="form-group">
-                <label for="sender_name">寄件人</label>
-                <input type="text" class="form-control" value="${condition.sender_name[0]}" id="sender_name" name="sender_name">
+                <label for="sender_name_condition">寄件人</label>
+                <input type="text" class="form-control" value="${condition.sender_name[0]}" id="sender_name_condition" name="sender_name_condition">
             </div>
             <div class="form-group">
-                <label for="recipient_name">收件人</label>
-                <input type="text" class="form-control" value="${condition.sender_name[0]}" id="recipient_name" name="recipient_name">
+                <label for="recipient_name_condition">收件人</label>
+                <input type="text" class="form-control" value="${condition.recipient_name[0]}" id="recipient_name_condition" name="recipient_name_condition">
             </div>
             <button type="submit" class="btn btn-default">查询</button>
         </form>
     </div>
 
     <div style="float: right;margin: 5px">
-        <a class="btn btn-primary" href="${pageContext.request.contextPath}/add/orders-add.jsp">添加订单</a>
+        <a class="btn btn-primary" href="${pageContext.request.contextPath}/add/orders-add.jsp?currentPage=${page.currentPage}&rows=${page.rows}&sender_name=${condition.sender_name[0]}&recipient_name=${condition.recipient_name[0]}">添加订单</a>
         <a class="btn btn-primary" href="javascript:void(0);" id="deleteSelected">删除选中</a>
     </div>
+
     <form id="form" action="${pageContext.request.contextPath}/OrdersSelectedDeleteServlet">
+        <input type="hidden" name="currentPage" value="${page.currentPage}">
+        <input type="hidden" name="rows" value="${page.rows}">
+        <input type="hidden" name="sender_name" value="${condition.sender_name[0]}">
+        <input type="hidden" name="recipient_name" value="${condition.recipient_name[0]}">
+
         <table border="1" class="table table-bordered table-hover">
             <tr class="success">
                 <th> </th>
@@ -88,6 +96,7 @@
                 <th>日期</th>
                 <th>操作</th>
             </tr>
+
             <c:forEach items="${page.list}" var="order" varStatus="s">
                 <tr>
                     <td><input type="checkbox"v name="oid" value="${order.id}"></td>
@@ -101,7 +110,7 @@
                     <td>
                         <f:formatDate value="${order.date}" pattern="yyyy年MM月dd日" />
                     </td>
-                    <td><a class="btn btn-default btn-sm" href="${pageContext.request.contextPath}/OrdersFindServlet?id=${order.id}">修改</a>&nbsp;
+                    <td><a class="btn btn-default btn-sm" href="${pageContext.request.contextPath}/OrdersFindServlet?id=${order.id}&currentPage=${page.currentPage}&rows=${page.rows}&sender_name_condition=${condition.sender_name[0]}&recipient_name_condition=${condition.recipient_name[0]}">修改</a>&nbsp;
                         <a class="btn btn-default btn-sm" href="javascript:deleteOrder(${order.id})">删除</a></td>
                 </tr>
             </c:forEach>
@@ -117,7 +126,7 @@
                     <c:if test="${page.currentPage != 1}">
                 <li>
                     </c:if>
-                    <a href="${pageContext.request.contextPath}/OrdersFindByPageServlet?currentPage=${page.currentPage - 1}&rows=${page.rows}&staff_name=${condition.name[0]}&position=${condition.position[0]}" aria-label="Previous">
+                    <a href="${pageContext.request.contextPath}/OrdersFindByPageServlet?currentPage=${page.currentPage - 1}&rows=${page.rows}&sender_name=${condition.sender_name[0]}&recipient_name=${condition.recipient_name[0]}" aria-label="Previous">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
@@ -125,10 +134,10 @@
 
                 <c:forEach begin="1" end="${page.totalPage}" var="i">
                     <c:if test="${page.currentPage != i}">
-                        <li><a href="${pageContext.request.contextPath}/OrdersFindByPageServlet?currentPage=${i}&rows=${page.rows}&staff_name=${condition.name[0]}&position=${condition.position[0]}">${i}</a></li>
+                        <li><a href="${pageContext.request.contextPath}/OrdersFindByPageServlet?currentPage=${i}&rows=${page.rows}&sender_name=${condition.sender_name[0]}&recipient_name=${condition.recipient_name[0]}">${i}</a></li>
                     </c:if>
                     <c:if test="${page.currentPage == i}">
-                        <li class="active"><a href="${pageContext.request.contextPath}/OrdersFindByPageServlet?currentPage=${i}&rows=${page.rows}&staff_name=${condition.name[0]}&position=${condition.position[0]}">${i}</a></li>
+                        <li class="active"><a href="${pageContext.request.contextPath}/OrdersFindByPageServlet?currentPage=${i}&rows=${page.rows}&sender_name=${condition.sender_name[0]}&recipient_name=${condition.recipient_name[0]}">${i}</a></li>
                     </c:if>
                 </c:forEach>
 
@@ -138,7 +147,7 @@
                     <c:if test="${page.currentPage != page.totalPage}">
                 <li>
                     </c:if>
-                    <a href="${pageContext.request.contextPath}/OrdersFindByPageServlet?currentPage=${page.currentPage + 1}&rows=${page.rows}&staff_name=${condition.name[0]}&position=${condition.position[0]}" aria-label="Next">
+                    <a href="${pageContext.request.contextPath}/OrdersFindByPageServlet?currentPage=${page.currentPage + 1}&rows=${page.rows}&sender_name=${condition.sender_name[0]}&recipient_name=${condition.recipient_name[0]}" aria-label="Next">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
@@ -151,7 +160,12 @@
                         ${page.totalCount}
                     </c:if>
                     条记录,共
-                    <f:formatNumber value="${page.totalPage}" pattern="0"/>
+                     <c:if test="${empty page}">
+                         0
+                     </c:if>
+                    <c:if test="${not empty page}">
+                        <f:formatNumber value="${page.totalPage}" pattern="0"/>
+                    </c:if>
                     页
                 </span>
             </ul>

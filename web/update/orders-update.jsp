@@ -13,7 +13,6 @@
     width: 默认宽度与设备的宽度相同
     initial-scale: 初始的缩放比，为1:1 -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>修改订单信息</title>
 
     <!-- 1. 导入CSS的全局样式 -->
@@ -22,15 +21,18 @@
     <script src="${pageContext.request.contextPath}/js/jquery-2.1.0.min.js"></script>
     <!-- 3. 导入bootstrap的js文件 -->
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-<%--    <script src="${pageContext.request.contextPath}/js/cascading.js"></script>--%>
-    <script src="${pageContext.request.contextPath}/js/city.js"></script>
 </head>
+
 <body>
 <div class="container">
     <h3>修改订单信息</h3>
     <form action="${pageContext.request.contextPath}/OrdersUpdateServlet" method="post">
 
         <input type="hidden" name="id" value="${orders.id}">
+        <input type="hidden" name="currentPage" value="${currentPage}">
+        <input type="hidden" name="rows" value="${rows}">
+        <input type="hidden" name="sender_name_condition" value="${sender_name_condition}">
+        <input type="hidden" name="recipient_name_condition" value="${recipient_name_condition}">
 
         <div class="form-group">
             <label for="sender_name">寄件人姓名：</label>
@@ -105,7 +107,7 @@
 
         <div class="form-group" style="text-align: center">
             <input class="btn btn-primary" type="submit" value="提交" />
-            <input class="btn btn-default" type="button" onclick="window.location.href='${pageContext.request.contextPath}/OrdersListServlet'" value="返回" />
+            <input class="btn btn-default" type="button" onclick="window.location.href='${pageContext.request.contextPath}/OrdersFindByPageServlet?currentPage=${currentPage}&rows=${rows}&sender_name=${sender_name_condition}&recipient_name=${recipient_name_condition}'" value="返回" />
         </div>
     </form>
 </div>

@@ -14,7 +14,6 @@
     width: 默认宽度与设备的宽度相同
     initial-scale: 初始的缩放比，为1:1 -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
     <title>职员信息管理系统</title>
 
     <!-- 1. 导入CSS的全局样式 -->
@@ -23,6 +22,7 @@
     <script src="${pageContext.request.contextPath}/js/jquery-2.1.0.min.js"></script>
     <!-- 3. 导入bootstrap的js文件 -->
     <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+
     <style type="text/css">
         td, th {
             text-align: center;
@@ -60,22 +60,21 @@
     <div style="float: left;margin: 5px">
         <form class="form-inline" action="${pageContext.request.contextPath}/StaffFindByPageServlet" method="post">
             <div class="form-group">
-                <label for="staff_name">姓名</label>
-                <input type="text" class="form-control" value="${condition.staff_name[0]}" name="staff_name" id="staff_name">
+                <label for="staff_name_condition">姓名</label>
+                <input type="text" class="form-control" value="${condition.staff_name[0]}" name="staff_name_condition" id="staff_name_condition">
             </div>
             <div class="form-group">
-                <label for="position">职位</label>
-                <input type="text" class="form-control" value="${condition.position[0]}" name="position" id="position">
+                <label for="position_condition">职位</label>
+                <input type="text" class="form-control" value="${condition.position[0]}" name="position_condition" id="position_condition">
             </div>
             <button type="submit" class="btn btn-default">查询</button>
         </form>
     </div>
 
     <div style="float: right;margin: 5px">
-        <a class="btn btn-primary" href="${pageContext.request.contextPath}/add/staff-add.jsp">添加职员</a>
+        <a class="btn btn-primary" href="${pageContext.request.contextPath}/add/staff-add.jsp?currentPage=${page.currentPage}&rows=${page.rows}&staff_name=${condition.name[0]}&position=${condition.position[0]}">添加职员</a>
         <a class="btn btn-primary" href="javascript:void(0);" id="deleteSelected">删除选中</a>
     </div>
-
 
     <form id="form" action="${pageContext.request.contextPath}/StaffSelectedDeleteServlet">
         <input type="hidden" name="currentPage" value="${page.currentPage}">
@@ -156,7 +155,12 @@
                         ${page.totalCount}
                     </c:if>
                     条记录,共
-                    <f:formatNumber value="${page.totalPage}" pattern="0"/>
+                     <c:if test="${empty page}">
+                         0
+                     </c:if>
+                    <c:if test="${not empty page}">
+                        <f:formatNumber value="${page.totalPage}" pattern="0"/>
+                    </c:if>
                     页
                 </span>
             </ul>
